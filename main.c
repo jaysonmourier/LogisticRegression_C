@@ -147,16 +147,18 @@ double* train(double* data, const int rows, const int cols, const int epochs, co
             }
 
             // add the bias
-            t += weigths[cols];
+            t += weigths[cols - 1];
 
             // get the probability            
             double p = model(t);
 
             // fit weights
-            for(int k = 0; k < cols; ++k)
+            for(int k = 0; k < cols - 1; ++k)
             {
                 weigths[k] = weigths[k] - lr * ( (p - y) * x_memory[k] );
             }
+
+            weigths[cols - 1] = weigths[cols - 1] - lr * ( (p - y) );
 
             total_loss += logloss(y, p);
         }
